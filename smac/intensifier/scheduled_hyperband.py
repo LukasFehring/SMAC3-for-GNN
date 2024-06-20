@@ -25,11 +25,14 @@ class ScheduledHyperband(Hyperband):
         return {0: list(range(self._min_budget, self._max_budget + 1))}
 
     def get_n_configs(self):
-        return {0: [math.floor(self._n_lowest_budget / (self._eta**i)) for i in range(self._s_max + 1)]}
+        return {0: [math.floor(self._n_lowest_budget / (self._eta**i)) for i in range(self._s_max)]}
 
     def get_max_iterations(self):
-        return {0: self._max_budget + 1}
+        return {0: self._max_budget}
 
     @property
     def n_configs(self):
-        return len(self.get_n_configs())
+        return len(self.get_n_configs()[0])
+    
+    def _get_next_bracket(self) -> int:
+        return 0
