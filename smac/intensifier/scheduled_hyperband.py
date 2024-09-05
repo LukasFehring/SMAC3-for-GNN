@@ -19,7 +19,7 @@ class ScheduledHyperband(Hyperband):
 
         self._n_configs_in_stage: Dict[int, list] = self.get_n_configs()
         self._budgets_in_stage: Dict[int, list] = self.get_budgets()
-        self._max_iterations: Dict[int, int] = self._get_max_iterations()
+        self._max_iterations: Dict[int, int] = self.get_max_iterations()
 
     def get_budgets(self):
         return {0: list(range(self._min_budget, self._max_budget + 1))}
@@ -29,6 +29,9 @@ class ScheduledHyperband(Hyperband):
 
     def _get_max_iterations(self, *args, **kwargs):
         return self._max_budget - self._min_budget + 1
+
+    def get_max_iterations(self):
+        return {0: self._get_max_iterations()}
 
     @property
     def n_configs(self):
